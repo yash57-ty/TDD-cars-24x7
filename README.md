@@ -95,3 +95,25 @@ H2 database handles testing. Run tests:
 ```bash
 .\mvnw.cmd test
 ```
+
+---
+
+## 🤖 My AI Usage
+
+### 🛠️ AI Tools Used
+* **Antigravity (built by Google DeepMind)**: Leveraged for codebase discovery, step-by-step TDD test generation, database performance refactoring, and troubleshooting SQL grammar mismatches.
+
+### 🧩 How AI Was Leveraged
+1. **API & Package Brainstorming**: Used the AI to design the Restful endpoints layout, DTO requirements, and packaging patterns aligned with standard Spring Boot architectures.
+2. **Strict Test-Driven Development (TDD) Loop**: Used the assistant to draft RED (failing) tests first for authentication (`AuthServiceTest`, `AuthControllerIntegrationTest`), vehicle CRUD, and search functionality before writing the actual code.
+3. **Concurrency Analysis & Debugging**:
+   * Evaluated database transaction locks when the multithreaded `ConcurrentPurchaseIntegrationTest` failed.
+   * Leveraged AI to implement row-level pessimistic locking (`SELECT ... FOR UPDATE`) in `VehicleRepository` to resolve the lost update race condition.
+   * Debugged the H2 SQL syntax error by overriding the PostgreSQL dialect inherited from main config properties inside `application-test.properties`.
+4. **Boilerplate & Spring Configurations**: Generated JWT encoding/decoding stubs, security request filtering, and exception mapper configurations.
+
+### 💡 Workflow Reflections
+* **Velocity & Context Isolation**: Writing failing tests first (RED) and then generating implementation code (GREEN) kept the codebase tightly scope-restricted. Having an AI write tests first helped identify edge cases (like out-of-stock scenarios or unauthorized route access) before coding began.
+* **Complex Bug Resolution**: AI was highly effective in explaining why concurrent transactions failed (the expected 3 vs actual 10 successes due to default isolation levels) and mapping it to a database pessimistic lock. This transformed what would have been a manual debugging cycle into an immediate database architectural fix.
+* **Responsible Integration**: Ensuring clear separation between test design and business implementation enforced software quality, with the final code verification remaining developer-driven.
+
