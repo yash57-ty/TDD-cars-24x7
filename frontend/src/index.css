@@ -138,3 +138,92 @@ body {
   padding: 100px 24px 40px;
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+/* Toast Notification Styles */
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  min-width: 300px;
+  max-width: 450px;
+  background: rgba(31, 40, 51, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  color: var(--text-bright);
+}
+
+.toast-card.success {
+  border-left: 4px solid var(--success);
+}
+
+.toast-card.error {
+  border-left: 4px solid var(--danger);
+}
+
+.toast-card.info {
+  border-left: 4px solid var(--accent-primary);
+}
+
+.toast-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.toast-card.success .toast-icon {
+  color: var(--success);
+}
+
+.toast-card.error .toast-icon {
+  color: var(--danger);
+}
+
+.toast-card.info .toast-icon {
+  color: var(--accent-primary);
+}
+
+.toast-message {
+  flex-grow: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.toast-close:hover {
+  color: var(--text-bright);
+}
+
