@@ -1,9 +1,12 @@
 package org.example.backend.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.backend.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,7 +25,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +44,30 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            
+            // Return custom 401 JSON for unauthenticated requests
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    Map<String, Object> body = new HashMap<>();
+                    body.put("status", 401);
+                    body.put("message", "Unauthorized: " + authException.getMessage());
+                    body.put("timestamp", LocalDateTime.now().toString());
+                    new ObjectMapper().writeValue(response.getOutputStream(), body);
+                })
+                // Return custom 403 JSON for access denied requests
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    Map<String, Object> body = new HashMap<>();
+                    body.put("status", 403);
+                    body.put("message", "Forbidden: You do not have permission to perform this action");
+                    body.put("timestamp", LocalDateTime.now().toString());
+                    new ObjectMapper().writeValue(response.getOutputStream(), body);
+                })
+            )
+            
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()
