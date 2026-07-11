@@ -121,4 +121,11 @@ class InventoryControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(body)))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    @DisplayName("POST /api/vehicles/{id}/purchase - should return 401 when not authenticated")
+    void purchase_ShouldReturn401_WhenNotAuthenticated() throws Exception {
+        mockMvc.perform(post("/api/vehicles/" + vehicleInStock.getId() + "/purchase"))
+                .andExpect(status().isUnauthorized());
+    }
 }

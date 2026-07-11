@@ -186,4 +186,28 @@ class VehicleControllerIntegrationTest {
                         .header("Authorization", userToken))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    @DisplayName("GET /api/vehicles - should return 200 without authentication (public browsing)")
+    void getAllVehicles_ShouldReturn200_WithoutAuth() throws Exception {
+        mockMvc.perform(get("/api/vehicles"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
+
+    @Test
+    @DisplayName("POST /api/vehicles - should return 401 when not authenticated")
+    void addVehicle_ShouldReturn401_WhenNoTokenProvided() throws Exception {
+        VehicleRequest request = new VehicleRequest();
+        request.setMake("Tesla");
+        request.setModel("Model 3");
+        request.setCategory("Electric");
+        request.setPrice(new BigDecimal("45000.00"));
+        request.setQuantity(3);
+
+        mockMvc.perform(post("/api/vehicles")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isUnauthorized());
+    }
 }

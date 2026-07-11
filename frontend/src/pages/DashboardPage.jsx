@@ -8,6 +8,7 @@ const DashboardPage = () => {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [make, setMake] = useState('');
+  const [model, setModel] = useState('');
   const [category, setCategory] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
@@ -20,6 +21,7 @@ const DashboardPage = () => {
       // Build query string
       const params = new URLSearchParams();
       if (searchParams.make) params.append('make', searchParams.make);
+      if (searchParams.model) params.append('model', searchParams.model);
       if (searchParams.category) params.append('category', searchParams.category);
       if (searchParams.minPrice) params.append('minPrice', searchParams.minPrice);
       if (searchParams.maxPrice) params.append('maxPrice', searchParams.maxPrice);
@@ -40,11 +42,12 @@ const DashboardPage = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchVehicles({ make, category, minPrice, maxPrice });
+    fetchVehicles({ make, model, category, minPrice, maxPrice });
   };
 
   const handleClearFilters = () => {
     setMake('');
+    setModel('');
     setCategory('');
     setMinPrice('');
     setMaxPrice('');
@@ -80,6 +83,17 @@ const DashboardPage = () => {
                   placeholder="e.g. Toyota, Honda"
                   value={make}
                   onChange={(e) => setMake(e.target.value)}
+                />
+              </div>
+
+              <div className="search-group">
+                <label className="search-label">Model</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Camry, Civic, X5"
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
                 />
               </div>
 
