@@ -45,6 +45,13 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             
+            // Secure headers configuration (OWASP standard protection)
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.deny())
+                .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'"))
+                .xssProtection(xss -> xss.disable())
+            )
+            
             // Return custom 401 JSON for unauthenticated requests
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint((request, response, authException) -> {
