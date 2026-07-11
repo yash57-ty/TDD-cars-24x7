@@ -214,57 +214,63 @@ const AdminPage = () => {
             </div>
           )}
         </main>
+      </div>
 
-        {/* Add/Edit Modal Overlay */}
-        {showModal && (
-          <div className="modal-backdrop">
-            <div className="modal-content glass-panel">
-              <div className="modal-header">
-                <h2>{editingVehicle ? 'Edit Vehicle details' : 'Add New Vehicle'}</h2>
-                <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
+      {/* Add/Edit Modal Overlay */}
+      {showModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content glass-panel">
+            <div className="modal-header">
+              <h2>{editingVehicle ? 'Edit Vehicle details' : 'Add New Vehicle'}</h2>
+              <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
+            </div>
+
+            <form id="vehicle-form" onSubmit={handleSaveVehicle} className="modal-form">
+              <div className="form-group">
+                <label className="form-label">Make / Brand</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Toyota, BMW, Tesla"
+                  value={make}
+                  onChange={(e) => setMake(e.target.value)}
+                  required
+                />
               </div>
 
-              <form onSubmit={handleSaveVehicle} className="modal-form">
-                <div className="form-group">
-                  <label className="form-label">Make / Brand</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={make}
-                    onChange={(e) => setMake(e.target.value)}
-                    required
-                  />
-                </div>
+              <div className="form-group">
+                <label className="form-label">Model</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Camry, X5, Model 3"
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  required
+                />
+              </div>
 
-                <div className="form-group">
-                  <label className="form-label">Model</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={model}
-                    onChange={(e) => setModel(e.target.value)}
-                    required
-                  />
-                </div>
+              <div className="form-group">
+                <label className="form-label">Category</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Sedan, SUV, Sports"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                />
+              </div>
 
-                <div className="form-group">
-                  <label className="form-label">Category</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={category}
-                    placeholder="e.g. Sedan, SUV, Sports"
-                    onChange={(e) => setCategory(e.target.value)}
-                    required
-                  />
-                </div>
-
+              <div className="modal-form-row">
                 <div className="form-group">
                   <label className="form-label">Price ($)</label>
                   <input
                     type="number"
                     step="0.01"
+                    min="0"
                     className="form-input"
+                    placeholder="e.g. 25000"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required
@@ -272,29 +278,31 @@ const AdminPage = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Initial Quantity</label>
+                  <label className="form-label">Quantity</label>
                   <input
                     type="number"
+                    min="0"
                     className="form-input"
+                    placeholder="e.g. 10"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     required
                   />
                 </div>
+              </div>
+            </form>
 
-                <div className="modal-actions">
-                  <button type="button" className="btn-clear" onClick={() => setShowModal(false)}>
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn-primary">
-                    Save Changes
-                  </button>
-                </div>
-              </form>
+            <div className="modal-actions">
+              <button type="button" className="btn-clear" onClick={() => setShowModal(false)}>
+                Cancel
+              </button>
+              <button type="submit" form="vehicle-form" className="btn-primary">
+                {editingVehicle ? 'Save Changes' : 'Add Vehicle'}
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
