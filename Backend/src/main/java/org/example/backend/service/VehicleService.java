@@ -6,8 +6,11 @@ import org.example.backend.dto.VehicleResponse;
 import org.example.backend.exception.ResourceNotFoundException;
 import org.example.backend.model.Vehicle;
 import org.example.backend.repository.VehicleRepository;
+import org.example.backend.specification.VehicleSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +65,23 @@ public class VehicleService {
             throw new ResourceNotFoundException("Vehicle not found with id: " + id);
         }
         vehicleRepository.deleteById(id);
+    }
+
+    public List<VehicleResponse> searchVehicles(
+            String make, String model, String category,
+            BigDecimal minPrice, BigDecimal maxPrice
+    ) {
+        Specification<Vehicle> spec = Specification
+                .where(VehicleSpecification.hasMake(make))
+                .and(VehicleSpecification.hasModel(model))
+                .and(VehicleSpecification.hasCategory(category))
+                .and(VehicleSpecification.hasPriceGreaterThanOrEqual(minPrice))
+                .and(VehicleSpecification.hasPriceLessThanOrEqual(maxPrice));
+
+        return vehicleRepository.findAll(spec)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
     private VehicleResponse mapToResponse(Vehicle vehicle) {

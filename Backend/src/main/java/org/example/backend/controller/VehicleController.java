@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,18 @@ public class VehicleController {
     @GetMapping
     public ResponseEntity<List<VehicleResponse>> getAllVehicles() {
         List<VehicleResponse> response = vehicleService.getAllVehicles();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<VehicleResponse>> searchVehicles(
+            @RequestParam(required = false) String make,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice
+    ) {
+        List<VehicleResponse> response = vehicleService.searchVehicles(make, model, category, minPrice, maxPrice);
         return ResponseEntity.ok(response);
     }
 
