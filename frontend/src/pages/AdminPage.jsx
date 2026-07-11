@@ -15,14 +15,12 @@ const AdminPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState(null);
   
-  // Form states
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   
-  // Restock state
   const [restockAmount, setRestockAmount] = useState({});
 
   useEffect(() => {
@@ -306,5 +304,4 @@ const AdminPage = () => {
     </>
   );
 };
-
 export default AdminPage;

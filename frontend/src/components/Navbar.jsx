@@ -24,7 +24,7 @@ const Navbar = () => {
             <path d="M9 17h6" />
             <circle cx="17" cy="17" r="2" />
           </svg>
-          <span>AutoSpace</span>
+          <span>Cars24×7</span>
         </Link>
 
         <div className="nav-links">

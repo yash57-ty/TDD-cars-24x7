@@ -206,13 +206,22 @@ cd Backend
 
 ## 📸 Application Screenshots
 
-> Run both servers and open **`http://localhost:5173`** to view the app.
+### 1. User Dashboard & Catalog Browsing
+![User Dashboard](./screenshots/userDashBoard.png)
 
-Key pages:
-- **`/`** — Vehicle catalog dashboard with search/filter panel (make, model, category, price)
-- **`/login`** — Glassmorphic login form with JWT authentication
-- **`/register`** — Account registration with confirm-password validation
-- **`/admin`** — Inventory console (ADMIN only) — add, edit, delete vehicles and restock inventory
+### 2. Live Filters & Search by Category/Make/Model
+![Admin Dashboard](./screenshots/Admin_Dashboard.png)
+
+### 3. Glassmorphic User Login & Registration
+| Sign In | Sign Up |
+|---|---|
+| ![Sign In](./screenshots/loginpage.png) | ![Sign Up](./screenshots/register.png) |
+
+### 4. Admin Management Console
+![Admin Panel](./screenshots/Adminpanel.png)
+
+### 5. Add / Edit Vehicle Modal Form
+![Add Vehicle Modal](./screenshots/Addvehicle.png)
 
 ---
 
