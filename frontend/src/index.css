@@ -666,6 +666,247 @@ body {
   margin-top: 10px;
 }
 
+/* Admin Management Console */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header-meta {
+  text-align: left;
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  color: var(--text-bright);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.admin-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.admin-console {
+  padding: 0;
+  overflow: hidden;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Admin Table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.admin-table th, 
+.admin-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.admin-table th {
+  background: rgba(15, 22, 36, 0.4);
+  color: var(--text-bright);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.admin-table tr {
+  transition: background-color 0.2s;
+}
+
+.admin-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.text-highlight {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.category-badge {
+  background: rgba(102, 252, 241, 0.08);
+  color: var(--accent-primary);
+  border: 1px solid rgba(102, 252, 241, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.stock-level {
+  font-weight: 600;
+}
+
+.stock-level.out {
+  color: var(--danger);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* Restock Action Block */
+.restock-box {
+  display: flex;
+  gap: 8px;
+  max-width: 150px;
+}
+
+.restock-input {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.btn-restock {
+  background: rgba(102, 252, 241, 0.1);
+  color: var(--accent-primary);
+  border: 1px solid rgba(102, 252, 241, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-restock:hover {
+  background: var(--accent-primary);
+  color: var(--bg-main);
+}
+
+/* Row Action Buttons */
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-bright);
+  border: 1px solid var(--border-glass);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-edit:hover {
+  background: var(--text-bright);
+  color: var(--bg-main);
+}
+
+.btn-delete-row {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-delete-row:hover {
+  background: var(--danger);
+  color: var(--text-bright);
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+}
+
+.empty-table-state {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* Modal Backdrops & Overlays */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 12px;
+}
+
+.modal-header h2 {
+  color: var(--text-bright);
+  font-size: 1.5rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text-bright);
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Global Helpers */
+.text-center { text-align: center; }
+.text-bright { color: var(--text-bright); }
+
+
 
 
 
