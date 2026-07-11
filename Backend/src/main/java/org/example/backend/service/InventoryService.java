@@ -17,7 +17,7 @@ public class InventoryService {
 
     @Transactional
     public VehicleResponse purchase(Long vehicleId) {
-        Vehicle vehicle = vehicleRepository.findById(vehicleId)
+        Vehicle vehicle = vehicleRepository.findByIdForUpdate(vehicleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id: " + vehicleId));
 
         if (vehicle.getQuantity() <= 0) {
@@ -37,7 +37,7 @@ public class InventoryService {
             throw new IllegalArgumentException("Restock amount must be greater than 0");
         }
 
-        Vehicle vehicle = vehicleRepository.findById(vehicleId)
+        Vehicle vehicle = vehicleRepository.findByIdForUpdate(vehicleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id: " + vehicleId));
 
         vehicle.setQuantity(vehicle.getQuantity() + amount);
