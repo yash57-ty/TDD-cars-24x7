@@ -90,11 +90,75 @@ cd Backend
 ```
 The API server runs on **`http://localhost:8080`**.
 
-### 3. Run Automated Tests
-H2 database handles testing. Run tests:
+### 3. Start the Frontend
+Open a **second terminal** and run:
 ```bash
+cd frontend
+npm install
+npm run dev
+```
+The SPA runs on **`http://localhost:5173`** and auto-proxies all `/api` calls to `localhost:8080`.
+
+> **Note:** Both the backend and frontend must be running simultaneously for the full application to work.
+
+### 4. Create an Admin User
+After registering normally, you can promote a user to ADMIN via psql:
+```sql
+UPDATE users SET role = 'ADMIN' WHERE email = 'your@email.com';
+```
+Admin users gain access to the Inventory Console at `/admin`.
+
+### 5. Run Automated Tests
+H2 in-memory database is used exclusively during testing:
+```bash
+cd Backend
 .\mvnw.cmd test
 ```
+
+---
+
+## 🧪 Test Report
+
+### Test Suite Results
+
+| Test Class | Type | Tests Run | Result |
+|---|---|---|---|
+| `AuthServiceTest` | Unit (Mockito) | 4 | ✅ PASS |
+| `VehicleServiceTest` | Unit (Mockito) | 7 | ✅ PASS |
+| `InventoryServiceTest` | Unit (Mockito) | 5 | ✅ PASS |
+| `AuthControllerIntegrationTest` | Integration (MockMvc) | 5 | ✅ PASS |
+| `VehicleControllerIntegrationTest` | Integration (MockMvc) | 6 | ✅ PASS |
+| `VehicleSearchIntegrationTest` | Integration (MockMvc) | 4 | ✅ PASS |
+| `InventoryControllerIntegrationTest` | Integration (MockMvc) | 5 | ✅ PASS |
+| `ConcurrentPurchaseIntegrationTest` | Concurrency Load | 1 | ✅ PASS |
+| `JwtServiceTest` | Security Unit | 4 | ✅ PASS |
+| **TOTAL** | | **42** | **✅ BUILD SUCCESS** |
+
+### Key Test Scenarios
+- **Password Encoding** — Verifies BCrypt hash is stored, never plain text.
+- **Duplicate Email Registration** — Returns `409 Conflict`.
+- **JWT Token Validation** — Expired tokens correctly rejected.
+- **Admin-Only Delete** — Regular users receive `403 Forbidden`.
+- **Search Filtering** — Queries by make, category, and price range.
+- **Out-of-Stock Purchase** — Returns `400 Bad Request` when quantity = 0.
+- **Concurrent Purchases** — 10 simultaneous threads; pessimistic lock ensures only `qty` units sold.
+
+```
+[INFO] Tests run: 42, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+```
+
+---
+
+## 📸 Application Screenshots
+
+> Screenshots will be available once the application is deployed. Run both servers locally and visit `http://localhost:5173` to view the application.
+>
+> Key pages:
+> - **`/`** — Vehicle catalog dashboard with search/filter panel
+> - **`/login`** — Glassmorphic login form
+> - **`/register`** — Account registration form  
+> - **`/admin`** — Inventory management console (Admin only)
 
 ---
 

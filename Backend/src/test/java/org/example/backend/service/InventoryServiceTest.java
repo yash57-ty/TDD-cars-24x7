@@ -46,23 +46,34 @@ class InventoryServiceTest {
                 .build();
     }
 
+    // ============================================================
+    // TEST 1: purchase() — happy path, quantity decrements
+    // ============================================================
     @Test
     @DisplayName("purchase() - should decrement quantity by 1")
     void purchase_ShouldDecrementQuantity() {
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicleInStock));
+        // GIVEN — Service now uses findByIdForUpdate (pessimistic lock)
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(vehicleInStock));
         when(vehicleRepository.save(any(Vehicle.class))).thenAnswer(inv -> inv.getArgument(0));
 
+        // WHEN
         VehicleResponse response = inventoryService.purchase(1L);
 
+        // THEN
         assertThat(response.getQuantity()).isEqualTo(4);
         verify(vehicleRepository).save(argThat(v -> v.getQuantity() == 4));
     }
 
+    // ============================================================
+    // TEST 2: purchase() — out of stock throws InsufficientStockException
+    // ============================================================
     @Test
     @DisplayName("purchase() - should throw InsufficientStockException when quantity is 0")
     void purchase_ShouldThrow_WhenOutOfStock() {
-        when(vehicleRepository.findById(2L)).thenReturn(Optional.of(vehicleOutOfStock));
+        // GIVEN
+        when(vehicleRepository.findByIdForUpdate(2L)).thenReturn(Optional.of(vehicleOutOfStock));
 
+        // WHEN / THEN
         assertThatThrownBy(() -> inventoryService.purchase(2L))
                 .isInstanceOf(InsufficientStockException.class)
                 .hasMessageContaining("out of stock");
@@ -70,30 +81,45 @@ class InventoryServiceTest {
         verify(vehicleRepository, never()).save(any());
     }
 
+    // ============================================================
+    // TEST 3: purchase() — vehicle not found throws ResourceNotFoundException
+    // ============================================================
     @Test
     @DisplayName("purchase() - should throw ResourceNotFoundException when vehicle not found")
     void purchase_ShouldThrow_WhenVehicleNotFound() {
-        when(vehicleRepository.findById(999L)).thenReturn(Optional.empty());
+        // GIVEN — mock returns empty for unknown id
+        when(vehicleRepository.findByIdForUpdate(999L)).thenReturn(Optional.empty());
 
+        // WHEN / THEN
         assertThatThrownBy(() -> inventoryService.purchase(999L))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 
+    // ============================================================
+    // TEST 4: restock() — happy path, quantity increments
+    // ============================================================
     @Test
     @DisplayName("restock() - should increment quantity by given amount")
     void restock_ShouldIncrementQuantity() {
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicleInStock));
+        // GIVEN
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(vehicleInStock));
         when(vehicleRepository.save(any(Vehicle.class))).thenAnswer(inv -> inv.getArgument(0));
 
+        // WHEN
         VehicleResponse response = inventoryService.restock(1L, 10);
 
+        // THEN
         assertThat(response.getQuantity()).isEqualTo(15);
         verify(vehicleRepository).save(argThat(v -> v.getQuantity() == 15));
     }
 
+    // ============================================================
+    // TEST 5: restock() — invalid amount throws IllegalArgumentException
+    // ============================================================
     @Test
     @DisplayName("restock() - should throw when amount is 0 or negative")
     void restock_ShouldThrow_WhenAmountIsInvalid() {
+        // WHEN / THEN — no repository call needed for invalid amount guard
         assertThatThrownBy(() -> inventoryService.restock(1L, 0))
                 .isInstanceOf(IllegalArgumentException.class);
 
