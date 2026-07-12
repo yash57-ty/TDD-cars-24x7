@@ -4,6 +4,14 @@ A full-stack, production-ready **Car Dealership Inventory System** built with **
 
 ---
 
+## 🌐 Deployed Live Application
+
+* **Frontend SPA**: Hosted on **Vercel**
+* **Backend REST API**: Deployed on **AWS Elastic Beanstalk** (URL: [http://cars247-env.eba-hdqdmw3r.ap-southeast-2.elasticbeanstalk.com](http://cars247-env.eba-hdqdmw3r.ap-southeast-2.elasticbeanstalk.com))
+* **Database**: Hosted on **AWS RDS (PostgreSQL)**
+
+---
+
 ## 🛠️ Technology Stack
 
 | Layer | Technology |
