@@ -110,6 +110,7 @@
     </dependencies>
 
     <build>
+        <finalName>TDD-Cars</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

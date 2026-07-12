@@ -76,8 +76,9 @@ public class SecurityConfig {
             )
             
             .authorizeHttpRequests(auth -> auth
-                // Public: auth endpoints and vehicle browsing (GET) so dashboard works for guests
+                // Public: auth endpoints, hello check, and vehicle browsing (GET) so dashboard works for guests
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/hello").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/vehicles", "/api/vehicles/search", "/api/vehicles/{id}").permitAll()
                 // All write/inventory operations require authentication
                 .anyRequest().authenticated()

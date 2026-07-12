@@ -210,4 +210,11 @@ class VehicleControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isUnauthorized());
     }
+    @Test
+    @DisplayName("GET /hello - should return 200 and 'Hello World' without authentication")
+    void hello_ShouldReturnHelloWorld_WithoutAuth() throws Exception {
+        mockMvc.perform(get("/hello"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hello World"));
+    }
 }

@@ -147,7 +147,7 @@ cd frontend
 npm install
 npm run dev
 ```
-The SPA runs on **`http://localhost:5173`** and auto-proxies all `/api` calls to `localhost:8080`.
+The SPA runs on **`http://localhost:5173`** and auto-proxies all `/api` calls to `localhost:5000`.
 
 > ⚠️ **Both servers must be running simultaneously** for the full application to work.
 
@@ -178,12 +178,12 @@ cd Backend
 | `InventoryServiceTest` | Unit (Mockito) | 5 | ✅ PASS |
 | `JwtServiceTest` | Security Unit | 4 | ✅ PASS |
 | `AuthControllerIntegrationTest` | Integration (MockMvc) | 5 | ✅ PASS |
-| `VehicleControllerIntegrationTest` | Integration (MockMvc) | 8 | ✅ PASS |
+| `VehicleControllerIntegrationTest` | Integration (MockMvc) | 9 | ✅ PASS |
 | `VehicleSearchIntegrationTest` | Integration (MockMvc) | 4 | ✅ PASS |
 | `InventoryControllerIntegrationTest` | Integration (MockMvc) | 5 | ✅ PASS |
 | `ConcurrentPurchaseIntegrationTest` | Concurrency Load | 1 | ✅ PASS |
 | `BackendApplicationTests` | Context Load | 1 | ✅ PASS |
-| **TOTAL** | | **45** | **✅ BUILD SUCCESS** |
+| **TOTAL** | | **46** | **✅ BUILD SUCCESS** |
 
 ### Key Test Scenarios Covered
 - ✅ Password BCrypt encoding — plain text never stored
@@ -198,7 +198,7 @@ cd Backend
 - ✅ Concurrent purchases — 10 threads, pessimistic lock prevents over-selling
 
 ```
-[INFO] Tests run: 45, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 46, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
 ```
 
